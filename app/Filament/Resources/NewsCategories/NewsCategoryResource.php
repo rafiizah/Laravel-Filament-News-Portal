@@ -20,6 +20,11 @@ class NewsCategoryResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Tag;
 
+    public static function canCreate(): bool
+    {
+        return auth()->user()->isAdmin();
+    }
+
     protected static ?string $recordTitleAttribute = 'title';
 
     public static function form(Schema $schema): Schema

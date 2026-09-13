@@ -19,7 +19,7 @@ class NewsTable
     {
         return $table
             ->columns([
-                TextColumn::make('author.name')
+                TextColumn::make('author.username')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('newsCategory.title')
@@ -36,7 +36,7 @@ class NewsTable
             ])
             ->filters([
                 SelectFilter::make('author_id')
-                    ->relationship('author', 'name')
+                    ->relationship('author', 'username')
                     ->label('Select Author'),
                 SelectFilter::make('news_category_id')
                     ->relationship('newsCategory', 'title')

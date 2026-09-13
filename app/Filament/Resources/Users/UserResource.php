@@ -1,23 +1,22 @@
 <?php
 
-namespace App\Filament\Resources\Authors;
+namespace App\Filament\Resources\Users;
 
-use App\Filament\Resources\Authors\Pages\CreateAuthor;
-use App\Filament\Resources\Authors\Pages\EditAuthor;
-use App\Filament\Resources\Authors\Pages\ListAuthors;
-use App\Filament\Resources\Authors\Schemas\AuthorForm;
-use App\Filament\Resources\Authors\Tables\AuthorsTable;
-use App\Models\Author;
+use App\Filament\Resources\Users\Pages\CreateUser;
+use App\Filament\Resources\Users\Pages\EditUser;
+use App\Filament\Resources\Users\Pages\ListUsers;
+use App\Filament\Resources\Users\Schemas\UserForm;
+use App\Filament\Resources\Users\Tables\UsersTable;
+use App\Models\User;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
-
 use Filament\Tables\Table;
 
-class AuthorResource extends Resource
+class UserResource extends Resource
 {
-    protected static ?string $model = Author::class;
+    protected static ?string $model = User::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Users;
 
@@ -31,17 +30,16 @@ class AuthorResource extends Resource
         return auth()->user()->isAdmin();
     }
 
-
-    protected static ?string $recordTitleAttribute = 'name';
+    protected static ?string $recordTitleAttribute = 'User';
 
     public static function form(Schema $schema): Schema
     {
-        return AuthorForm::configure($schema);
+        return UserForm::configure($schema);
     }
 
     public static function table(Table $table): Table
     {
-        return AuthorsTable::configure($table);
+        return UsersTable::configure($table);
     }
 
     public static function getRelations(): array
@@ -54,9 +52,9 @@ class AuthorResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListAuthors::route('/'),
-            'create' => CreateAuthor::route('/create'),
-            'edit' => EditAuthor::route('/{record}/edit'),
+            'index' => ListUsers::route('/'),
+            'create' => CreateUser::route('/create'),
+            'edit' => EditUser::route('/{record}/edit'),
         ];
     }
 }

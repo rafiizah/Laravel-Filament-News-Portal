@@ -18,8 +18,25 @@ class NewsForm
         return $schema
             ->components([
                 Select::make('author_id')
-                    ->relationship('author', 'name')
-                    ->required(),
+                    ->relationship('author', 'username')
+                    ->required()
+                    ->options(function () {
+                        $user = auth()->user();
+                        if ($user->isAdmin()) {
+                            return \App\Models\Author::all()->pluck('username', 'id');
+                        } elseif ($user->author) {
+                            return [$user->author->id => $user->author->username];
+                        }
+                        return [];
+                    })
+                    ->default(function () {
+                        $user = auth()->user();
+                        return $user->author ? $user->author->id : null;
+                    })
+                    ->disabled(function () {
+                        $user = auth()->user();
+                        return !$user->isAdmin();
+                    }),
                 Select::make('news_category_id')
                     ->relationship('newsCategory', 'title')
                     ->required(),

@@ -26,8 +26,8 @@ class NewsCategoriesTable
             ])
             ->recordActions([
                 ViewAction::make(),
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make()->visible(auth()->user()->isAdmin()),
+                DeleteAction::make()->visible(auth()->user()->isAdmin()),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

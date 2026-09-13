@@ -13,12 +13,26 @@ use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+
 
 class NewsResource extends Resource
 {
     protected static ?string $model = News::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Newspaper;
+
+
+    public static function getEloquentQuery(): Builder
+    {
+        $query = parent::getEloquentQuery();
+
+        if (auth()->user()->isAdmin()) {
+            return $query;
+        }
+
+        return $query->where('author_id', auth()->user()->author->id);
+    }
 
     protected static ?string $recordTitleAttribute = 'title';
 

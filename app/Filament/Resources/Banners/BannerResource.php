@@ -20,6 +20,16 @@ class BannerResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Photo;
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()->isAdmin();
+    }
+
+    public static function canCreate(): bool
+    {
+        return auth()->user()->isAdmin();
+    }
+
     public static function form(Schema $schema): Schema
     {
         return BannerForm::configure($schema);

@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Authors\Schemas;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\Select;
 use Filament\Schemas\Schema;
 
 class AuthorForm
@@ -13,7 +14,10 @@ class AuthorForm
     {
         return $schema
             ->components([
-                TextInput::make('name')
+                Select::make('user_id')
+                    ->relationship('user', 'name')
+                    ->searchable()
+                    ->preload()
                     ->required(),
                 TextInput::make('username')
                     ->required(),
